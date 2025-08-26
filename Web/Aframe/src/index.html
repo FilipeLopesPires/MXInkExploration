@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+    <title>A-Frame AR Passthrough</title>
+    <style>
+      html, body { margin: 0; height: 100%; }
+      #overlay {
+        position: fixed; inset: 0; display: grid; place-items: center;
+        background: rgba(0,0,0,0.8); color: #fff; font-family: system-ui, sans-serif; z-index: 9999;
+      }
+      #startAR { font-size: 1.1rem; padding: 0.9rem 1.2rem; border: 0; border-radius: 12px; cursor: pointer; }
+    </style>
+  </head>
+  <body>
+    <div id="overlay"><button id="startAR">Tap to start AR</button></div>
+
+    <a-scene
+      xr-mode-ui="XRMode: ar"
+      webxr="optionalFeatures: dom-overlay; overlayElement: #overlay"
+      renderer="colorManagement: true"
+    >
+      <a-box position="0 1 -0.5" scale="0.1 0.1 0.1" color="#FFCC00" shadow></a-box>
+      <a-entity light="type: directional; intensity: 0.9" position="0 3 1"></a-entity>
+      <a-entity light="type: ambient; intensity: 0.3"></a-entity>
+    </a-scene>
+
+    <!-- Since root is src/, use a relative path -->
+    <script type="module" src="./main.js"></script>
+  </body>
+</html>
