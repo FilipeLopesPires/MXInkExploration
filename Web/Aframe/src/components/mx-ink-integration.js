@@ -289,9 +289,14 @@ AFRAME.registerComponent('mx-ink-integration', {
           return;
         }
         
-        const stylusStillConnected = currentSession.inputSources.some(
-          inputSource => inputSource.id === this.mxInkInputSource.id
-        );
+        // Check if stylus is still connected by iterating through input sources
+        let stylusStillConnected = false;
+        for (let i = 0; i < currentSession.inputSources.length; i++) {
+          if (currentSession.inputSources[i].id === this.mxInkInputSource.id) {
+            stylusStillConnected = true;
+            break;
+          }
+        }
         
         if (!stylusStillConnected) {
           this.onMXInkDisconnected('Stylus disconnected');
