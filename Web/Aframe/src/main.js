@@ -1,6 +1,5 @@
 import 'aframe';
-import './components/mx-ink-integration.js';
-import './components/mx-ink-stylus-visualizer.js';
+import './components/mx-ink-event-handler.js';
 
 const overlay = document.getElementById('overlay');
 const startBtn = document.getElementById('startAR');
@@ -34,37 +33,28 @@ const startAR = async () => {
   // Hide overlay after we've attempted to start AR
   overlay.style.display = 'none';
   
-  // Add some basic debugging
-  logToScene('🎮 AR session started');
+  console.log('AR session started');
 };
 
 // Attach user-gesture handler
 startBtn.addEventListener('click', startAR);
 
-// Helper function to log to the scene
-function logToScene(message) {
-  const logText = document.getElementById('log-text');
-  if (logText) {
-    const currentValue = logText.getAttribute('value') || '';
-    const timestamp = new Date().toLocaleTimeString();
-    const logEntry = `[${timestamp}] ${message}`;
-    
-    // Add new message and keep only last 10
-    const lines = currentValue.split('\n').filter(line => line.trim());
-    lines.push(logEntry);
-    
-    if (lines.length > 10) {
-      lines.shift();
-    }
-    
-    logText.setAttribute('value', lines.join('\n'));
-  }
-  
-  // Also log to console
-  console.log(message);
-}
-
 // Optional: if you want to auto-enable the button on load
 window.addEventListener('DOMContentLoaded', () => {
-  // Nothing special here; we just wait for the user to tap.
+  
+  // Check if components are attached to DOM elements
+  setTimeout(() => {
+    const rightController = document.getElementById('mxink-controller-right');
+    const leftController = document.getElementById('mxink-controller-left');
+    
+    if (rightController) {
+      console.log('Right controller element found:', rightController);
+      console.log('Right controller components:', rightController.components);
+    }
+    
+    if (leftController) {
+      console.log('Left controller element found:', leftController);
+      console.log('Left controller components:', leftController.components);
+    }
+  }, 2000);
 });
