@@ -1,4 +1,4 @@
-AFRAME.registerComponent('simple-mx-ink-detector', {
+AFRAME.registerComponent('mx-ink-integration', {
   init() {
     this.mxInkDetected = false;
     this.statusText = null;
@@ -43,48 +43,6 @@ AFRAME.registerComponent('simple-mx-ink-detector', {
     
     // Start checking for controllers
     this.startControllerChecking();
-  },
-
-  createLogDisplay() {
-    // Create a text entity for logs
-    this.logText = document.createElement('a-text');
-    this.logText.setAttribute('id', 'log-text');
-    this.logText.setAttribute('value', 'Starting MX Ink detection...');
-    this.logText.setAttribute('position', '0 1.5 -1');
-    this.logText.setAttribute('color', '#FFFFFF');
-    this.logText.setAttribute('align', 'left');
-    this.logText.setAttribute('width', '4');
-    this.logText.setAttribute('wrapCount', '40');
-    this.logText.setAttribute('font', 'monoid');
-    this.logText.setAttribute('scale', '0.1 0.1 0.1'); // Reduce font size
-    this.logText.setAttribute('fontSize', '10px');
-    
-    // Add to the scene
-    const scene = document.querySelector('a-scene');
-    scene.appendChild(this.logText);
-    
-    this.log('📝 Log display created');
-  },
-
-  log(message) {
-    const timestamp = new Date().toLocaleTimeString();
-    const logEntry = `[${timestamp}] ${message}`;
-    
-    // Add to our log array
-    this.logMessages.push(logEntry);
-    
-    // Keep only last 10 messages to avoid clutter
-    if (this.logMessages.length > 10) {
-      this.logMessages.shift();
-    }
-    
-    // Update the log display
-    if (this.logText) {
-      this.logText.setAttribute('value', this.logMessages.join('\n'));
-    }
-    
-    // Also log to console for debugging
-    console.log(message);
   },
 
   startControllerChecking() {
@@ -319,48 +277,6 @@ AFRAME.registerComponent('simple-mx-ink-detector', {
     }
   },
 
-  updatePositionLog(position, orientation) {
-    if (this.logMessages.length > 0) {
-      const lastMessage = this.logMessages[this.logMessages.length - 1];
-      
-      // Check if this is already a position update message
-      if (lastMessage.includes('📍 Position:')) {
-        // Update the existing position message
-        const newMessage = `📍 Position: X:${position.x.toFixed(3)} Y:${position.y.toFixed(3)} Z:${position.z.toFixed(3)}`;
-        this.logMessages[this.logMessages.length - 1] = newMessage;
-      } else {
-        // Add new position message with orientation
-        this.log(`📍 Position: X:${position.x.toFixed(3)} Y:${position.y.toFixed(3)} Z:${position.z.toFixed(3)} | Rot: ${this.formatOrientation(orientation)}`);
-      }
-      
-      // Update the display
-      if (this.logText) {
-        this.logText.setAttribute('value', this.logMessages.join('\n'));
-      }
-    }
-  },
-
-  updateTargetRayLog(position, orientation) {
-    if (this.logMessages.length > 0) {
-      const lastMessage = this.logMessages[this.logMessages.length - 1];
-      
-      // Check if this is already a target ray update message
-      if (lastMessage.includes('🎯 Target:')) {
-        // Update the existing target ray message
-        const newMessage = `🎯 Target: X:${position.x.toFixed(3)} Y:${position.y.toFixed(3)} Z:${position.z.toFixed(3)}`;
-        this.logMessages[this.logMessages.length - 1] = newMessage;
-      } else {
-        // Add new target ray message
-        this.log(`🎯 Target: X:${position.x.toFixed(3)} Y:${position.y.toFixed(3)} Z:${position.z.toFixed(3)}`);
-      }
-      
-      // Update the display
-      if (this.logText) {
-        this.logText.setAttribute('value', this.logMessages.join('\n'));
-      }
-    }
-  },
-
   monitorForDisconnection() {
     // Check every 2 seconds if the stylus is still connected
     this.disconnectionCheckInterval = setInterval(() => {
@@ -436,5 +352,90 @@ AFRAME.registerComponent('simple-mx-ink-detector', {
     if (this.logText) {
       this.logText.remove();
     }
+  },
+  
+  createLogDisplay() {
+    // Create a text entity for logs
+    this.logText = document.createElement('a-text');
+    this.logText.setAttribute('id', 'log-text');
+    this.logText.setAttribute('value', 'Starting MX Ink detection...');
+    this.logText.setAttribute('position', '0 1.5 -1');
+    this.logText.setAttribute('color', '#FFFFFF');
+    this.logText.setAttribute('align', 'left');
+    this.logText.setAttribute('width', '4');
+    this.logText.setAttribute('wrapCount', '40');
+    this.logText.setAttribute('font', 'monoid');
+    this.logText.setAttribute('scale', '0.1 0.1 0.1'); // Reduce font size
+    this.logText.setAttribute('fontSize', '10px');
+    
+    // Add to the scene
+    const scene = document.querySelector('a-scene');
+    scene.appendChild(this.logText);
+    
+    this.log('📝 Log display created');
+  },
+
+  log(message) {
+    const timestamp = new Date().toLocaleTimeString();
+    const logEntry = `[${timestamp}] ${message}`;
+    
+    // Add to our log array
+    this.logMessages.push(logEntry);
+    
+    // Keep only last 10 messages to avoid clutter
+    if (this.logMessages.length > 10) {
+      this.logMessages.shift();
+    }
+    
+    // Update the log display
+    if (this.logText) {
+      this.logText.setAttribute('value', this.logMessages.join('\n'));
+    }
+    
+    // Also log to console for debugging
+    console.log(message);
+  },
+
+  updatePositionLog(position, orientation) {
+    if (this.logMessages.length > 0) {
+      const lastMessage = this.logMessages[this.logMessages.length - 1];
+      
+      // Check if this is already a position update message
+      if (lastMessage.includes('📍 Position:')) {
+        // Update the existing position message
+        const newMessage = `📍 Position: X:${position.x.toFixed(3)} Y:${position.y.toFixed(3)} Z:${position.z.toFixed(3)}`;
+        this.logMessages[this.logMessages.length - 1] = newMessage;
+      } else {
+        // Add new position message with orientation
+        this.log(`📍 Position: X:${position.x.toFixed(3)} Y:${position.y.toFixed(3)} Z:${position.z.toFixed(3)} | Rot: ${this.formatOrientation(orientation)}`);
+      }
+      
+      // Update the display
+      if (this.logText) {
+        this.logText.setAttribute('value', this.logMessages.join('\n'));
+      }
+    }
+  },
+
+  updateTargetRayLog(position, orientation) {
+    if (this.logMessages.length > 0) {
+      const lastMessage = this.logMessages[this.logMessages.length - 1];
+      
+      // Check if this is already a target ray update message
+      if (lastMessage.includes('🎯 Target:')) {
+        // Update the existing target ray message
+        const newMessage = `🎯 Target: X:${position.x.toFixed(3)} Y:${position.y.toFixed(3)} Z:${position.z.toFixed(3)}`;
+        this.logMessages[this.logMessages.length - 1] = newMessage;
+      } else {
+        // Add new target ray message
+        this.log(`🎯 Target: X:${position.x.toFixed(3)} Y:${position.y.toFixed(3)} Z:${position.z.toFixed(3)}`);
+      }
+      
+      // Update the display
+      if (this.logText) {
+        this.logText.setAttribute('value', this.logMessages.join('\n'));
+      }
+    }
   }
+
 });

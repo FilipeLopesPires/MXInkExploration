@@ -1,5 +1,5 @@
 import 'aframe';
-import './components/simple-mx-ink-detector.js';
+import './components/mx-ink-integration.js';
 
 const overlay = document.getElementById('overlay');
 const startBtn = document.getElementById('startAR');
