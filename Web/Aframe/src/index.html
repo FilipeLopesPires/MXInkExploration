@@ -21,9 +21,29 @@
       webxr="optionalFeatures: dom-overlay; overlayElement: #overlay"
       renderer="colorManagement: true"
     >
+      <!-- Simple MX Ink Detector -->
+      <a-entity simple-mx-ink-detector></a-entity>
+      
+      <!-- Visual reference elements -->
       <a-box position="0 1 -0.5" scale="0.1 0.1 0.1" color="#FFCC00" shadow></a-box>
+      
+      <!-- Grid for spatial reference -->
+      <a-grid position="0 0 0" rotation="-90 0 0" width="4" height="4" color="#444444"></a-grid>
+      
+      <!-- Lights -->
       <a-entity light="type: directional; intensity: 0.9" position="0 3 1"></a-entity>
       <a-entity light="type: ambient; intensity: 0.3"></a-entity>
+      
+      <!-- Status indicator for MX Ink detection -->
+      <a-text 
+        id="status-text"
+        value="Waiting for MX Ink stylus..." 
+        position="0 2 -1" 
+        color="#FFFFFF" 
+        align="center"
+        width="3"
+        hide-in-ar
+      ></a-text>
     </a-scene>
 
     <!-- Since root is src/, use a relative path -->

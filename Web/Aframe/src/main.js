@@ -1,6 +1,5 @@
 import 'aframe';
-import 'aframe-extras'; // optional, but you have it installed
-import './components/hide-in-ar.js';
+import './components/simple-mx-ink-detector.js';
 
 const overlay = document.getElementById('overlay');
 const startBtn = document.getElementById('startAR');
@@ -31,12 +30,38 @@ const startAR = async () => {
     return;
   }
 
-  // Hide overlay after we’ve attempted to start AR
+  // Hide overlay after we've attempted to start AR
   overlay.style.display = 'none';
+  
+  // Add some basic debugging
+  logToScene('🎮 AR session started');
 };
 
 // Attach user-gesture handler
 startBtn.addEventListener('click', startAR);
+
+// Helper function to log to the scene
+function logToScene(message) {
+  const logText = document.getElementById('log-text');
+  if (logText) {
+    const currentValue = logText.getAttribute('value') || '';
+    const timestamp = new Date().toLocaleTimeString();
+    const logEntry = `[${timestamp}] ${message}`;
+    
+    // Add new message and keep only last 10
+    const lines = currentValue.split('\n').filter(line => line.trim());
+    lines.push(logEntry);
+    
+    if (lines.length > 10) {
+      lines.shift();
+    }
+    
+    logText.setAttribute('value', lines.join('\n'));
+  }
+  
+  // Also log to console
+  console.log(message);
+}
 
 // Optional: if you want to auto-enable the button on load
 window.addEventListener('DOMContentLoaded', () => {
