@@ -103,6 +103,7 @@ AFRAME.registerComponent('mx-ink-integration', {
     this.log('🎉 MX Ink stylus is now active!');
     this.log(`📏 Stylus ID: ${inputSource.id}`);
     this.log(`🤚 Handedness: ${inputSource.handedness || 'Unknown'}`);
+    console.log(inputSource);
     
     // Update the status text
     if (this.statusText) {
@@ -222,6 +223,13 @@ AFRAME.registerComponent('mx-ink-integration', {
           if (pose) {
             const position = pose.transform.position;
             const orientation = pose.transform.orientation;
+            
+            // Emit the pose data to the scene
+            scene.emit('mxink-pose', {
+              position: [position.x, position.y, position.z],
+              orientation: [orientation.x, orientation.y, orientation.z, orientation.w]
+            });
+            console.log('Emit pose update:', { position: position, orientation: orientation });
             
             // Update position log (this will be called every frame but only updates when needed)
             this.updatePositionLog(position, orientation);
@@ -398,7 +406,7 @@ AFRAME.registerComponent('mx-ink-integration', {
     }
     
     // Also log to console for debugging
-    console.log(message);
+    //console.log(message);
   },
 
   updatePositionLog(position, orientation) {

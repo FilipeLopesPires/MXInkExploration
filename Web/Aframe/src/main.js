@@ -1,5 +1,6 @@
 import 'aframe';
 import './components/mx-ink-integration.js';
+import './components/mx-ink-stylus-visualizer.js';
 
 const overlay = document.getElementById('overlay');
 const startBtn = document.getElementById('startAR');
