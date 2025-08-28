@@ -12,6 +12,10 @@
       }
       #startAR { font-size: 1.1rem; padding: 0.9rem 1.2rem; border: 0; border-radius: 12px; cursor: pointer; }
     </style>
+    <script type="module" src="main.js"></script>
+    <script type="module" src="stroke-geometry.js"></script>
+    <script type="module" src="components/mx-ink-brush.js"></script>
+    <script type="module" src="systems/mx-ink-brush.js"></script>
   </head>
   <body>
     <div id="overlay"><button id="startAR">Tap to start AR</button></div>
@@ -25,13 +29,13 @@
       <a-entity 
         id="mxink-controller-right"
         logitech-mx-ink-controls="hand: right; model: true"
-        mx-ink-event-handler="hand: right">
+        mx-ink-brush="hand: right">
       </a-entity>
       
       <a-entity 
         id="mxink-controller-left"
         logitech-mx-ink-controls="hand: left; model: true"
-        mx-ink-event-handler="hand: left">
+        mx-ink-brush="hand: left">
       </a-entity>
       
       <!-- Visual reference elements -->
@@ -45,8 +49,5 @@
       <a-entity light="type: ambient; intensity: 0.3"></a-entity>
       
     </a-scene>
-
-    <!-- Since root is src/, use a relative path -->
-    <script type="module" src="./main.js"></script>
   </body>
 </html>
