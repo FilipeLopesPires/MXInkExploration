@@ -1,5 +1,4 @@
 import 'aframe';
-import './components/mx-ink-event-handler.js';
 
 const overlay = document.getElementById('overlay');
 const startBtn = document.getElementById('startAR');
