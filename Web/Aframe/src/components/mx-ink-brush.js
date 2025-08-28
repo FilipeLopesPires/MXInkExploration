@@ -2,77 +2,92 @@ import 'aframe';
 
 AFRAME.registerComponent('mx-ink-brush', {
     schema: {
-      color: {type: 'color', default: '#ef2d5e'},
-      size: {default: 0.01, min: 0.001, max: 0.3},
-      enabled: {default: true},
-      hand: {default: 'left'}
+        color: {type: 'color', default: '#7851A9'},
+        size: {default: 0.01, min: 0.001, max: 1.0},
+        pressureMultiplier: {default: 5.0, min: 0.01, max: 10.0},
+        enabled: {default: true},
+        hand: {default: 'left'}
     },
   
     init: function () {
-      var data = this.data;
-      var el = this.el;
-      this.color = new THREE.Color(data.color);
-      this.painting = false;
-      this.stroke = null;
-      this.buttonsDown = 0;
-      this.touches = 0;
-  
-      this.onTouchStarted = this.onTouchStarted.bind(this);
-      el.addEventListener('tiptouchstart', this.onTouchStarted);
-      this.onTouchEnded = this.onTouchEnded.bind(this);
-      el.addEventListener('tiptouchend', this.onTouchEnded);
-  
-      this.onButtonDown = this.onButtonDown.bind(this);
-      el.addEventListener('buttondown', this.onButtonDown);
-      this.onButtonUp = this.onButtonUp.bind(this);
-      el.addEventListener('buttonup', this.onButtonUp);
-  
-      this.onControllerConnected = this.onControllerConnected.bind(this);
-      el.addEventListener('controllerconnected', this.onControllerConnected);
-  
-      this.el.setAttribute('logitech-mx-ink-controls', {hand: this.data.hand});
+        var data = this.data;
+        var el = this.el;
+        this.color = new THREE.Color(data.color);
+        this.painting = false;
+        this.stroke = null;
+        this.buttonsDown = 0;
+        this.touches = 0;
+        this.originalSize = data.size;
+    
+        this.onTouchStarted = this.onTouchStarted.bind(this);
+        el.addEventListener('tiptouchstart', this.onTouchStarted);
+        this.onTouchEnded = this.onTouchEnded.bind(this);
+        el.addEventListener('tiptouchend', this.onTouchEnded);
+    
+        this.onButtonDown = this.onButtonDown.bind(this);
+        el.addEventListener('buttondown', this.onButtonDown);
+        this.onButtonUp = this.onButtonUp.bind(this);
+        el.addEventListener('buttonup', this.onButtonUp);
+        this.onButtonChanged = this.onButtonChanged.bind(this);
+        el.addEventListener('buttonchanged', this.onButtonChanged);
+    
+        this.onControllerConnected = this.onControllerConnected.bind(this);
+        el.addEventListener('controllerconnected', this.onControllerConnected);
+    
+        this.el.setAttribute('logitech-mx-ink-controls', {hand: this.data.hand});
     },
   
     onControllerConnected: function (evt) {
-      this.hand = evt.target.getAttribute(evt.detail.name).hand;
-      this.controllerName = evt.detail.name;
-      this.controllerJustConnected = true;
-      //console.log('Controller connected:', this.controllerName, this.hand);
+        this.hand = evt.target.getAttribute(evt.detail.name).hand;
+        this.controllerName = evt.detail.name;
+        this.controllerJustConnected = true;
+        //console.log('Controller connected:', this.controllerName, this.hand);
     },
   
     onTouchStarted: function (evt) {
-      if (!this.data.enabled) { return; }
-      this.startNewStroke();
-      this.painting = true;
-      //console.log('Touch started');
+        if (!this.data.enabled) { return; }
+        this.startNewStroke();
+        this.painting = true;
+        //console.log('Touch started');
     },
   
     onTouchEnded: function (evt) {
-      if (!this.data.enabled) { return; }
-      if (!this.painting) { return; }
-      this.stroke = null;
-      this.painting = false;
-      //console.log('Touch ended');
+        if (!this.data.enabled) { return; }
+        if (!this.painting) { return; }
+        this.stroke = null;
+        this.painting = false;
+        //console.log('Touch ended');
     },
   
     onButtonDown: function () {
-      if (!this.data.enabled) { return; }
-      this.buttonsDown++;
-      this.startNewStroke();
-      this.painting = true;
-      //console.log('Button down');
+        if (!this.data.enabled) { return; }
+        this.buttonsDown++;
+        this.startNewStroke();
+        this.painting = true;
+        //console.log('Button down');
     },
   
     onButtonUp: function () {
-      if (!this.data.enabled) { return; }
-      this.buttonsDown--;
-      if (this.buttonDown > 0) { return; }
-      if (!this.painting) { return; }
-      this.stroke = null;
-      this.painting = false;
-      //console.log('Button up');
+        if (!this.data.enabled) { return; }
+        this.buttonsDown--;
+        if (this.buttonDown > 0) { return; }
+        if (!this.painting) { return; }
+        this.stroke = null;
+        this.painting = false;
+        //console.log('Button up');
     },
-  
+
+    onButtonChanged: function (evt) {
+        if (!this.data.enabled) { return; }
+        if (!this.painting) { return; }
+        if (evt.detail.state.value === 1) {
+            this.data.size = this.originalSize;
+        } else {
+            this.data.size = this.originalSize * evt.detail.state.value * this.data.pressureMultiplier;
+        }
+        //console.log(evt.detail.state.value);
+    },
+    
     tick: (function () {
       var position = new THREE.Vector3();
       var rotation = new THREE.Quaternion();
@@ -89,6 +104,7 @@ AFRAME.registerComponent('mx-ink-brush', {
         }
         this.el.object3D.matrixWorld.decompose(position, rotation, scale);
         var pointerPosition = this.getPointerPosition(position, rotation);
+        this.stroke.setSize(this.data.size);
         this.stroke.addPoint(position, rotation, pointerPosition);
       };
     })(),

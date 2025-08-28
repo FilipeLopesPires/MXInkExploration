@@ -102,6 +102,15 @@ AFRAME.registerSystem('mx-ink-brush', {
   
       this.strokeGeometry = new StrokeGeometry(brushMaterial, this.entityEl);
     },
+
+    setSize: (function () {
+      return function (size) {
+        if (this.size === size) {
+          return;
+        }
+        this.size = size;
+      };
+    })(),
   
     addPoint: (function () {
       var previousPosition;
