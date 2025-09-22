@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-6772791480746186124
+--- !u!114 &-6866879406222568247
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d236b7d11115f2143951f1e14045df39, type: 3}
   m_Name: Android Settings
   m_EditorClassIdentifier: 
-  m_LoaderManagerInstance: {fileID: -172239452955656080}
+  m_LoaderManagerInstance: {fileID: -2205983713496695742}
   m_InitManagerOnStart: 1
---- !u!114 &-172239452955656080
+--- !u!114 &-2205983713496695742
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -30,7 +30,7 @@ MonoBehaviour:
   m_AutomaticLoading: 0
   m_AutomaticRunning: 0
   m_Loaders:
-  - {fileID: 11400000, guid: d3084f28467e1fc45b805dc7b3a38756, type: 2}
+  - {fileID: 11400000, guid: 2fdfe3d851cf5a04daa45cf1681680a5, type: 2}
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -45,9 +45,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Keys: 0700000001000000
   Values:
-  - {fileID: -6772791480746186124}
-  - {fileID: 2314848055332221492}
---- !u!114 &1417445130811688843
+  - {fileID: -6866879406222568247}
+  - {fileID: 8316048404012439476}
+--- !u!114 &1065673630997433582
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -63,8 +63,8 @@ MonoBehaviour:
   m_AutomaticLoading: 0
   m_AutomaticRunning: 0
   m_Loaders:
-  - {fileID: 11400000, guid: d3084f28467e1fc45b805dc7b3a38756, type: 2}
---- !u!114 &2314848055332221492
+  - {fileID: 11400000, guid: 2fdfe3d851cf5a04daa45cf1681680a5, type: 2}
+--- !u!114 &8316048404012439476
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -76,5 +76,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d236b7d11115f2143951f1e14045df39, type: 3}
   m_Name: Standalone Settings
   m_EditorClassIdentifier: 
-  m_LoaderManagerInstance: {fileID: 1417445130811688843}
+  m_LoaderManagerInstance: {fileID: 1065673630997433582}
   m_InitManagerOnStart: 1
