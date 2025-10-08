@@ -5,7 +5,7 @@ A comprehensive exploration of Logitech MX Ink stylus integration across multipl
   <tr>
     <td width="33.33%" align="center">
       <img src="Recordings/controller_detection.gif" alt="gif 1" width="100%">
-      <sub><b>Hand + Controller + Stylus Automated Detection</b></sub>
+      <sub><b>Hand + Controller + Stylus Detection</b></sub>
     </td>
     <td width="33.33%" align="center">
       <img src="Recordings/space_drawing.gif" alt="gif 2" width="100%">
