@@ -1,6 +1,24 @@
 # MX Ink Exploration
 A comprehensive exploration of Logitech MX Ink stylus integration across multiple platforms and frameworks for XR applications.
 
+<table width="100%">
+  <tr>
+    <td width="33.33%" align="center">
+      <img src="Recordings/controller_detection.gif" alt="gif 1" width="100%">
+      <sub><b>Hand + Controller + Stylus Automated Detection</b></sub>
+    </td>
+    <td width="33.33%" align="center">
+      <img src="Recordings/space_drawing.gif" alt="gif 2" width="100%">
+      <sub><b>Trigger Pressure Sensitive Spatial Drawing</b></sub>
+    </td>
+    <td width="33.33%" align="center">
+      <img src="Recordings/surface_drawing.gif" alt="gif 3" width="100%">
+      <sub><b>Tip Pressure Sensitive Surface Drawing</b></sub>
+    </td>
+  </tr>
+</table>
+
+
 ## Overview
 
 This repository contains multiple demos showcasing the Logitech MX Ink stylus integration with different technologies for creating interactive 3D drawing experiences in virtual and mixed reality. Each demo demonstrates different approaches to stylus input handling, 3D rendering, and platform integration.
