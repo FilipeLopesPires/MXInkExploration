@@ -29,6 +29,7 @@ This repository contains multiple demos showcasing the Logitech MX Ink stylus in
 
 #### [A-Frame Demo](Web/Aframe/)
 A WebXR demo using A-Frame framework for AR applications. Features real-time 3D stroke rendering with custom stroke geometry and MX Ink controller integration.
+It includes personal work on A-Frame's source code (PR [#5756](https://github.com/aframevr/aframe/pull/5756)) to support brush stroke size variation based on controller input pressure and other improvements!
 
 #### [Three.js Demo](Web/Threejs/)
 A WebXR demo using Three.js for VR/MR applications. Utilizes TubePainter for creating 3D tube-like strokes with MX Ink stylus integration.
