@@ -70,4 +70,4 @@ This work builds on top of:
 - [Diego Marcos](https://github.com/dmarcos)'s mx-ink-controls native integration for [A-Frame](https://github.com/aframevr/aframe)
 - [Fabio Cortés](https://github.com/fcor)'s mx-ink-webxr template for [Three.js](https://threejs.org/)
 
-For further information, please contact me at fsnap@protonmail.com.
+For further information, feel free to reach out.
